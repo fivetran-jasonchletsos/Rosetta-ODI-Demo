@@ -48,7 +48,7 @@ export const STAGES: Stage[] = [
     detail: [
       "Log-based CDC for databases; API polling for SaaS apps; file pickup; event ingestion.",
       "Automatic schema-drift handling: new tables and columns propagate without breaking the pipe.",
-      "Priced on MAR (Monthly Active Rows) — distinct rows changed per month, counted once.",
+      "Priced on MAR (Monthly Active Rows) — distinct rows inserted, updated, or deleted in a month, counted once.",
     ],
   },
   {
@@ -57,7 +57,7 @@ export const STAGES: Stage[] = [
     owner: "seam",
     verb: "Persist",
     ftTerm: "Destination",
-    dbtTerm: "Target / Source",
+    dbtTerm: "Target (connection profile)",
     blurb: "The warehouse or lake. This is the handshake — both sides touch it.",
     detail: [
       "Snowflake, BigQuery, Databricks, Redshift, or an Iceberg/Delta lake in object storage.",
@@ -90,7 +90,7 @@ export const STAGES: Stage[] = [
     detail: [
       "MetricFlow compiles metric definitions into correct SQL on the fly.",
       "Define 'revenue' once, in version control — every dashboard agrees on the number.",
-      "Exposed through a governed API (JDBC / GraphQL) that BI and AI tools consume.",
+      "Served to BI and AI tools through a governed API (JDBC / GraphQL) — the MetricFlow engine is open source, the hosted serving layer is a dbt Cloud capability.",
     ],
   },
   {
@@ -208,8 +208,9 @@ export const DBT_PILLARS: Pillar[] = [
     title: "Semantic layer & metrics",
     owner: "dbt",
     why: "This is how a customer gets one governed definition of 'revenue' that every BI tool agrees on — the payoff that makes transformed data consumable.",
-    body: "Semantic models define entities, dimensions, and measures on top of dbt models. MetricFlow compiles a metric definition into correct SQL on demand, handling joins and time grains. Define a metric once, in version control, and expose it through a governed API so downstream tools query the metric — not raw tables — and always get a consistent number.",
-    nodes: ["Semantic model (entities/dimensions/measures)", "MetricFlow engine", "Governed metric definition", "Semantic layer API (JDBC/GraphQL)", "BI tools (Tableau / Power BI / Hex)"],
+    body: "Semantic models define entities, dimensions, and measures on top of dbt models. MetricFlow — the metric-compilation engine, itself open source — turns a metric definition into correct SQL on demand, handling joins and time grains. Define a metric once, in version control. The hosted Semantic Layer (a dbt Cloud capability) then serves those metrics over a governed API so downstream tools query the metric — not raw tables — and always get a consistent number.",
+    nodes: ["Semantic model (entities/dimensions/measures)", "MetricFlow engine (OSS)", "Governed metric definition", "Semantic Layer serving API (Cloud)", "BI tools (Tableau / Power BI / Hex)"],
+    flag: "MetricFlow is open source; the hosted Semantic Layer serving API (JDBC/GraphQL) is a dbt Cloud capability. Keep the distinction — the engine is OSS, the served endpoint is commercial.",
   },
   {
     key: "orchestration",
@@ -217,7 +218,7 @@ export const DBT_PILLARS: Pillar[] = [
     owner: "dbt",
     why: "This is the operational counterpart to a Fivetran sync schedule — how transformations get scheduled, tested in CI, and governed across teams.",
     body: "dbt Cloud jobs run dbt build on a schedule or trigger — and can fire right after a Fivetran sync completes. Slim CI builds and tests only the changed models and their downstream dependencies on a pull request. Environments separate dev/staging/prod. dbt Mesh lets large orgs split into governed projects that ref each other, with model access, groups, and versions as guardrails.",
-    nodes: ["Cloud job / scheduler", "Slim CI on PR", "Environments (dev/stage/prod)", "dbt Mesh cross-project ref", "Model access / groups / versions"],
+    nodes: ["Cloud job / scheduler", "Slim CI on PR", "Environments (dev/stage/prod)", "dbt Mesh cross-project ref", "Model access / groups / versions", "Auto-generated docs / lineage site"],
   },
   {
     key: "meetsft",
@@ -262,7 +263,7 @@ export const DAY: DayRow[] = [
   { moment: "A new data need", ft: "A team wants Zendesk data. Spin up the connector, authenticate, select tables, set frequency. No extraction code.", dbt: "The Zendesk raw tables appear. Declare them as a source, write staging models, add tests, ref() into a mart." },
   { moment: "Something breaks", ft: "Source API changed a field. Schema drift handled it automatically; review the schema change log and approve.", dbt: "A test fails: not_null on a column that's now sometimes empty. Trace the lineage, fix the model or the test, open a PR." },
   { moment: "Shipping a change", ft: "Adjust column selection to cut MAR on a high-churn table. Change takes effect on the next sync.", dbt: "Open a PR; Slim CI builds only the changed models + downstream, runs their tests, blocks merge if anything fails." },
-  { moment: "The handoff", ft: "Confirm the sync lands before the transformation fires — coordinate the sync schedule with the dbt job trigger.", dbt: "Set the job to run on sync-completion (Fivetran Transformations) so models always build on fresh data." },
+  { moment: "The handoff", ft: "Confirm the sync lands before the transformation fires — wire the sync-completion trigger to the dbt job so they stay in order.", dbt: "Set the job to run on sync-completion (Fivetran Transformations) so models always build on fresh data." },
   { moment: "What 'done' means", ft: "Data is in the warehouse, reliably, with schema managed and PII handled per policy. The pipe is green.", dbt: "Data is modeled, tested, documented, and a governed metric is live for BI. The number is trustworthy." },
 ];
 

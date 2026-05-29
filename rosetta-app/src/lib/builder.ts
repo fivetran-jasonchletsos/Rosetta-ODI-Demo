@@ -48,7 +48,7 @@ export const ALL_NET_MODES: NetMode[] = [
 export function netModesFor(categoryId: string): NetMode[] {
   switch (categoryId) {
     case "db":
-      return ALL_NET_MODES; // databases support the full set incl. reverse SSH
+      return ALL_NET_MODES; // databases support the full set: direct, PrivateLink, SSH, and reverse SSH
     case "saas":
       // most SaaS API connectors reach the source over its public API endpoint
       return ALL_NET_MODES.filter((m) => m.id === "direct");
