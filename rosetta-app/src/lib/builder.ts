@@ -50,7 +50,8 @@ export function netModesFor(categoryId: string): NetMode[] {
     case "db":
       return ALL_NET_MODES; // databases support the full set incl. reverse SSH
     case "saas":
-      return ALL_NET_MODES.filter((m) => m.id === "direct" || m.id === "privatelink");
+      // most SaaS API connectors reach the source over its public API endpoint
+      return ALL_NET_MODES.filter((m) => m.id === "direct");
     case "file":
       return ALL_NET_MODES.filter((m) => m.id === "direct" || m.id === "ssh");
     case "event":
