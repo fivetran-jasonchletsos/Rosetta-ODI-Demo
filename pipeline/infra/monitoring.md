@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | Connector sync status | Fivetran dashboard / API | Any failed sync -> page |
 | Sync MAR consumption | Fivetran usage API | Daily MAR > 2x trailing-7-day median -> warn (re-sync or churn spike) |
-| Source freshness | `dbt source freshness` | warn 36h, error 60h after last `_synced_at` |
+| Source freshness | `dbt source freshness` | warn 36h, error 60h after last `_fivetran_synced` |
 | dbt build result | `run_results.json` | Any model error or test failure -> page |
 | dbt test pass rate | `run_results.json` | < 100% on marts -> page (target > 99% overall) |
 | GX checkpoint | Great Expectations validation result | Any failed expectation -> Slack `#data-quality` |

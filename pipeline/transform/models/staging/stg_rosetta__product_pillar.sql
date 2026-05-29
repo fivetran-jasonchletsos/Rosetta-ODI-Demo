@@ -9,7 +9,7 @@ renamed as (
         cast(seq as integer)                  as pillar_seq,
         title                                 as pillar_title,
         lower(owner)                          as owner,
-        cast(_synced_at as timestamp)         as synced_at
+        cast(synced_at as timestamp)         as synced_at
     from source
 )
 

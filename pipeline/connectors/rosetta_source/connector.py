@@ -12,12 +12,13 @@ Design notes a reviewer should expect to see:
   * incremental sync via a per-table watermark held in connector state
   * op.checkpoint after each table so an interrupted sync resumes cleanly
   * a stable primary key per table (Fivetran upserts, never duplicates)
-  * a _synced_at metadata column on every row
+  * a synced_at column on every row (Fivetran also stamps its own _fivetran_synced,
+    which is what dbt source freshness keys off — see transform/models/staging)
   * MAR-conscious: only rows whose source_updated_at advances are re-emitted,
     so a no-change run costs ~zero Monthly Active Rows
 
 Run locally:  fivetran debug   (from this directory, with configuration.json)
-Deploy:       fivetran deploy --destination <dest> --connection rosetta_source
+Deploy:       fivetran deploy --api-key <KEY> --destination <DEST> --connection rosetta_source --configuration configuration.json
 """
 
 from __future__ import annotations
@@ -77,7 +78,7 @@ def update(configuration: dict, state: dict):
             if row_wm <= last:
                 continue  # unchanged since last sync — skip, protects MAR
             record = dict(row)
-            record["_synced_at"] = synced_at
+            record["synced_at"] = synced_at  # Fivetran adds _fivetran_synced separately
             yield op.upsert(table, record)
             emitted += 1
             if row_wm > high:

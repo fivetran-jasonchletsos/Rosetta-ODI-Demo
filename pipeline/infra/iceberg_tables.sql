@@ -1,7 +1,10 @@
 -- Open-lake landing in Apache Iceberg (Snowflake-managed Iceberg tables).
--- The ODI pattern: land in an open table format so Snowflake, Spark, Trino, and
--- the Fivetran Managed Data Lake can all read the same files. Fivetran can land
--- directly into Iceberg; this mirrors the raw schema into the lake for openness.
+-- The ODI pattern: land in an open table format so Snowflake, Spark, and Trino
+-- can all read the same files. Fivetran's Managed Data Lake Service lands Iceberg
+-- into your OWN object store with an external catalog (Glue / Polaris /
+-- Fivetran-managed) -- it does not write Snowflake-managed Iceberg. This file
+-- instead builds a Snowflake-managed Iceberg copy of the marts so the same gold
+-- tables are queryable as open Iceberg from Snowflake, Spark, and Trino.
 
 -- External volume backing the Iceberg files (object storage).
 create external volume if not exists rosetta_lake

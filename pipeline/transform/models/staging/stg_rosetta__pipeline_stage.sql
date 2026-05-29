@@ -11,7 +11,7 @@ renamed as (
         verb,
         ft_term                               as fivetran_term,
         dbt_term,
-        cast(_synced_at as timestamp)         as synced_at
+        cast(synced_at as timestamp)         as synced_at
     from source
 )
 

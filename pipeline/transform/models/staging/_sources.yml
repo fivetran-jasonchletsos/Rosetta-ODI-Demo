@@ -7,7 +7,9 @@ sources:
       seam: exactly what the connector writes is what dbt declares here.
     database: ANALYTICS
     schema: jason_chletsos_rosetta
-    loaded_at_field: _synced_at
+    # _fivetran_synced is the system column Fivetran stamps on every loaded row —
+    # the right key for freshness (guaranteed present, set by the platform).
+    loaded_at_field: _fivetran_synced
     freshness:
       # the connector runs on a daily cadence; warn after a missed day, error after two
       warn_after: { count: 36, period: hour }

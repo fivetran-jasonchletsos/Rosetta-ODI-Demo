@@ -9,7 +9,7 @@ renamed as (
         lower(category)                          as source_category,
         extraction_method,
         cast(source_updated_at as timestamp)     as source_updated_at,
-        cast(_synced_at as timestamp)            as synced_at
+        cast(synced_at as timestamp)            as synced_at
     from source
 )
 

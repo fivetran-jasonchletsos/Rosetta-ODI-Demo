@@ -3,7 +3,7 @@
 ## Deploy
 
 1. `infra/snowflake_setup.sql` once per account (warehouse, schemas, roles).
-2. Deploy the connector: `cd connectors/rosetta_source && fivetran deploy --destination <dest> --connection rosetta_source`.
+2. Deploy the connector: `cd connectors/rosetta_source && fivetran deploy --api-key <KEY> --destination <DEST> --connection rosetta_source --configuration configuration.json`.
 3. dbt: `cd transform && dbt deps`. CI runs `dbt build` (Slim CI builds only
    changed models + downstream on a PR).
 4. Schedule: enable the `rosetta_pipeline` Airflow DAG (or a dbt Cloud job

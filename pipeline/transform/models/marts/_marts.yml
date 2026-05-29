@@ -80,7 +80,11 @@ models:
       - name: term_id
         data_type: varchar
         constraints: [{ type: not_null }, { type: primary_key }]
-        data_tests: [unique]
+        data_tests:
+          - unique
+          # dbt_expectations assertion (in-DAG GX-style check) — exercises the dep
+          - dbt_expectations.expect_column_values_to_match_regex:
+              regex: "^t[0-9]+$"
       - name: fivetran_term
         data_type: varchar
         constraints: [{ type: not_null }]

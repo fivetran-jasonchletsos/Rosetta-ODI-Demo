@@ -8,7 +8,7 @@ renamed as (
         ft_term                               as fivetran_term,
         dbt_term,
         lower(boundary_type)                  as boundary_type,
-        cast(_synced_at as timestamp)         as synced_at
+        cast(synced_at as timestamp)         as synced_at
     from source
 )
 
