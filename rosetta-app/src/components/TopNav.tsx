@@ -9,8 +9,9 @@ const NAV = [
   { num: "03", href: "/dbt",          label: "dbt" },
   { num: "04", href: "/builder",      label: "Builder" },
   { num: "05", href: "/translate",    label: "Translate" },
-  { num: "06", href: "/day",          label: "Day in the Life" },
-  { num: "07", href: "/architecture", label: "ODI" },
+  { num: "06", href: "/metrics",      label: "Metrics" },
+  { num: "07", href: "/day",          label: "Day in the Life" },
+  { num: "08", href: "/architecture", label: "ODI" },
 ];
 
 export default function TopNav() {

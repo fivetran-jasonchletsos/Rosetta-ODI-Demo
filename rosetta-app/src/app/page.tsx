@@ -6,8 +6,9 @@ const TABS = [
   { href: "/dbt", num: "03", title: "dbt, explained", desc: "Core, Cloud and Fusion, models and tests, the semantic layer, orchestration. For Fivetran people.", accent: "bar-dbt" },
   { href: "/builder", num: "04", title: "Config builder", desc: "Pick a source, destination, deployment and security mode, then the dbt half. Export the spec to PDF.", accent: "bar-seam" },
   { href: "/translate", num: "05", title: "Translation table", desc: "Fourteen term pairs mapping a Fivetran concept to its dbt analog — and where the boundary really is.", accent: "bar-ft" },
-  { href: "/day", num: "06", title: "Day in the life", desc: "Side-by-side: what a Fivetran admin's day looks like next to an analytics engineer's, and where they hand off.", accent: "bar-dbt" },
-  { href: "/architecture", num: "07", title: "How this is built", desc: "This app is itself an ODI demo — Fivetran lands the data, dbt models it, the front end reads gold.", accent: "bar-seam" },
+  { href: "/metrics", num: "06", title: "Metrics dashboard", desc: "The guide by the numbers — rendered from the gold marts and the dbt semantic layer. Charts on par with the architecture.", accent: "bar-seam" },
+  { href: "/day", num: "07", title: "Day in the life", desc: "Side-by-side: what a Fivetran admin's day looks like next to an analytics engineer's, and where they hand off.", accent: "bar-dbt" },
+  { href: "/architecture", num: "08", title: "How this is built", desc: "This app is itself an ODI demo — Fivetran lands the data, dbt models it, the front end reads gold.", accent: "bar-seam" },
 ];
 
 export default function Home() {
