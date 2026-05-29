@@ -9,12 +9,14 @@
 html, body {
   background: #f5f4ef;
   color: #15171c;
-  font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, Helvetica, Arial, sans-serif;
+  font-family: var(--font-plex-sans), ui-sans-serif, system-ui, -apple-system, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-.display { font-family: var(--font-space), Georgia, serif; letter-spacing: -0.01em; }
-.font-mono, [class*="font-mono"] { font-family: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace; }
+/* Fraunces — editorial variable serif. Tighter optical tracking at display sizes. */
+.display { font-family: var(--font-fraunces), Georgia, "Times New Roman", serif; letter-spacing: -0.015em; font-optical-sizing: auto; }
+.font-mono, [class*="font-mono"] { font-family: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace; }
 
 /* ────────────────────────────────────────────────────────────────────
    Background — engineering drafting paper.
@@ -23,10 +25,24 @@ html, body {
 .blueprint {
   background-color: #f5f4ef;
   background-image:
-    linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 220px),
+    /* two faint corner washes — Fivetran blue top-left, dbt coral bottom-right; the two halves, atmospherically */
+    radial-gradient(62% 52% at 0% 0%, rgba(43,110,242,0.07), transparent 70%),
+    radial-gradient(58% 48% at 100% 100%, rgba(255,92,57,0.06), transparent 70%),
+    linear-gradient(180deg, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0) 240px),
     repeating-linear-gradient(0deg,  rgba(21,23,28,0.035) 0px, rgba(21,23,28,0.035) 1px, transparent 1px, transparent 28px),
     repeating-linear-gradient(90deg, rgba(21,23,28,0.035) 0px, rgba(21,23,28,0.035) 1px, transparent 1px, transparent 28px);
   background-attachment: fixed;
+}
+
+/* Thin top accent stripe — blue → teal → coral, the brand mark stretched across the page. */
+.blueprint::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2b6ef2 0%, #0f9e8e 50%, #ff5c39 100%);
+  z-index: 50;
+  pointer-events: none;
 }
 
 :focus-visible { outline: 2px solid rgba(43,110,242,0.75); outline-offset: 2px; }
@@ -54,7 +70,7 @@ html, body {
 
 /* Eyebrow / ornament label */
 .eyebrow {
-  font-family: var(--font-jetbrains), monospace;
+  font-family: var(--font-plex-mono), monospace;
   font-size: 10px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
@@ -65,7 +81,7 @@ html, body {
 .pill {
   display: inline-flex; align-items: center; gap: 0.35rem;
   padding: 0.15rem 0.55rem; border-radius: 999px;
-  font-family: var(--font-jetbrains), monospace;
+  font-family: var(--font-plex-mono), monospace;
   font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase;
   border: 1px solid #e1ded4; color: #373c47; background: #fff;
 }
@@ -124,6 +140,7 @@ html { scrollbar-color: #cfccc0 #eceae2; scrollbar-width: thin; }
   @page { margin: 16mm; }
   html, body { background: #fff !important; }
   .blueprint { background: #fff !important; }
+  .blueprint::before { display: none !important; }
   .no-print { display: none !important; }
   .meta-bar, footer { display: none !important; }
   .print-sheet { box-shadow: none !important; border: none !important; }

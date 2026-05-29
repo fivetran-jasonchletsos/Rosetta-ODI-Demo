@@ -27,9 +27,9 @@ const config: Config = {
         seamsoft: "#e4f5f2",
       },
       fontFamily: {
-        display: ["var(--font-space)", "Georgia", "serif"],
-        sans:    ["var(--font-inter)", "ui-sans-serif", "system-ui", "-apple-system", "Helvetica", "Arial", "sans-serif"],
-        mono:    ["var(--font-jetbrains)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        display: ["var(--font-fraunces)", "Georgia", "Times New Roman", "serif"],
+        sans:    ["var(--font-plex-sans)", "ui-sans-serif", "system-ui", "-apple-system", "Helvetica", "Arial", "sans-serif"],
+        mono:    ["var(--font-plex-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
     },
   },

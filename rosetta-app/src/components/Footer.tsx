@@ -31,7 +31,7 @@ export default function Footer() {
               Fivetran (move) + Snowflake / Databricks / BigQuery + dbt (transform + test)
             </p>
             <p className="font-mono text-[10px] tracking-[0.15em] text-mute/60">
-              Set in Space Grotesk, Inter, JetBrains Mono
+              Set in Fraunces, IBM Plex Sans, IBM Plex Mono
             </p>
           </div>
           <p className="font-mono text-[10px] tracking-[0.15em] text-mute/60 text-right">2026 · Fivetran SE artifact</p>
