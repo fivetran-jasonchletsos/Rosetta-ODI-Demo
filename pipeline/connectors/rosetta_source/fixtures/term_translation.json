@@ -1,0 +1,16 @@
+[
+  { "term_id": "t01", "ft_term": "Connector",                       "dbt_term": "Source ( source() )",                 "boundary_type": "creates_vs_references", "source_updated_at": "2026-05-23T00:00:00Z" },
+  { "term_id": "t02", "ft_term": "Sync",                            "dbt_term": "Run / Build ( dbt build )",           "boundary_type": "inbound_vs_inplace",    "source_updated_at": "2026-05-23T00:00:00Z" },
+  { "term_id": "t03", "ft_term": "Destination",                     "dbt_term": "Target / connection profile (+ adapter)", "boundary_type": "two_sides_same_warehouse", "source_updated_at": "2026-05-23T00:00:00Z" },
+  { "term_id": "t04", "ft_term": "Normalized connector schema",     "dbt_term": "Staging models ( stg_* )",            "boundary_type": "handoff_overlap",       "source_updated_at": "2026-05-23T00:00:00Z" },
+  { "term_id": "t05", "ft_term": "MAR (Monthly Active Rows)",       "dbt_term": "Seats + consumption",                 "boundary_type": "no_clean_mapping",      "source_updated_at": "2026-05-23T00:00:00Z" },
+  { "term_id": "t06", "ft_term": "Activations / Reverse ETL",       "dbt_term": "Exposures",                           "boundary_type": "delivers_vs_documents", "source_updated_at": "2026-05-23T00:00:00Z" },
+  { "term_id": "t07", "ft_term": "Schema-drift handling",           "dbt_term": "Schema tests / contracts",            "boundary_type": "adapt_vs_enforce",      "source_updated_at": "2026-05-23T00:00:00Z" },
+  { "term_id": "t08", "ft_term": "Sync frequency / schedule",       "dbt_term": "Job schedule / triggers",             "boundary_type": "coordinated",           "source_updated_at": "2026-05-23T00:00:00Z" },
+  { "term_id": "t09", "ft_term": "Deployment mode (SaaS / Hybrid)", "dbt_term": "Cloud vs Core",                       "boundary_type": "where_compute_runs",    "source_updated_at": "2026-05-23T00:00:00Z" },
+  { "term_id": "t10", "ft_term": "(moves data; no equivalent)",     "dbt_term": "source freshness",                    "boundary_type": "no_clean_mapping",      "source_updated_at": "2026-05-23T00:00:00Z" },
+  { "term_id": "t11", "ft_term": "Column blocking / hashing (PII)",  "dbt_term": "Grants / meta tags (governance)",     "boundary_type": "different_enforcement_point", "source_updated_at": "2026-05-23T00:00:00Z" },
+  { "term_id": "t12", "ft_term": "Connector logs / sync history",   "dbt_term": "run_results.json / artifacts",        "boundary_type": "observability",         "source_updated_at": "2026-05-23T00:00:00Z" },
+  { "term_id": "t13", "ft_term": "Fivetran dbt package (Quickstart)","dbt_term": "dbt package ( packages.yml )",        "boundary_type": "shared_artifact",       "source_updated_at": "2026-05-23T00:00:00Z" },
+  { "term_id": "t14", "ft_term": "Transformations (Fivetran-managed)","dbt_term": "Models ( .sql in models/ )",         "boundary_type": "handoff_overlap",       "source_updated_at": "2026-05-23T00:00:00Z" }
+]

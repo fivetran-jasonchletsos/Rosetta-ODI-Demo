@@ -1,0 +1,50 @@
+semantic_models:
+  - name: term_translation
+    description: Semantic model over the terminology fact for governed metrics.
+    model: ref('fct_term_translation')
+    defaults:
+      agg_time_dimension: ds
+    entities:
+      - name: term
+        type: primary
+        expr: term_id
+    dimensions:
+      - name: boundary_type
+        type: categorical
+      - name: maps_cleanly
+        type: categorical
+      - name: ds
+        type: time
+        type_params: { time_granularity: day }
+        # constant load date for the reference snapshot; replace with synced_at in prod
+        expr: cast('2026-05-23' as date)
+    measures:
+      - name: term_count
+        agg: count
+        expr: term_id
+      - name: clean_mapping_count
+        agg: sum
+        expr: case when maps_cleanly then 1 else 0 end
+
+  - name: product_pillar
+    description: Semantic model over pillars, by product.
+    model: ref('dim_product_pillar')
+    defaults:
+      agg_time_dimension: ds
+    entities:
+      - name: pillar
+        type: primary
+        expr: pillar_key
+    dimensions:
+      - name: product
+        type: categorical
+      - name: owner
+        type: categorical
+      - name: ds
+        type: time
+        type_params: { time_granularity: day }
+        expr: cast('2026-05-22' as date)
+    measures:
+      - name: pillar_count
+        agg: count
+        expr: pillar_key

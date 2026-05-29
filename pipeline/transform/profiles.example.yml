@@ -1,0 +1,26 @@
+# Copy to ~/.dbt/profiles.yml (or set DBT_PROFILES_DIR). The target schema MUST
+# stay prefixed jason_chletsos_ per workspace convention — dbt appends _staging
+# and _marts to it for the layered schemas.
+rosetta:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      authenticator: externalbrowser
+      role: TRANSFORMER
+      warehouse: ROSETTA_WH
+      database: ANALYTICS
+      schema: jason_chletsos_rosetta
+      threads: 4
+    prod:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      private_key_path: "{{ env_var('SNOWFLAKE_KEY_PATH') }}"
+      role: TRANSFORMER
+      warehouse: ROSETTA_WH
+      database: ANALYTICS
+      schema: jason_chletsos_rosetta
+      threads: 8

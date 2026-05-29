@@ -1,0 +1,8 @@
+[
+  { "stage_id": "sources",   "seq": 1, "title": "Sources",    "owner": "ft",   "verb": "Originate",     "ft_term": "Source system",            "dbt_term": "(upstream of dbt)",            "source_updated_at": "2026-05-21T00:00:00Z" },
+  { "stage_id": "move",      "seq": 2, "title": "Move",       "owner": "ft",   "verb": "Extract + Load","ft_term": "Connector / Sync",         "dbt_term": "(no equivalent)",              "source_updated_at": "2026-05-21T00:00:00Z" },
+  { "stage_id": "warehouse", "seq": 3, "title": "Land + Store","owner": "seam","verb": "Persist",       "ft_term": "Destination",             "dbt_term": "Target (connection profile)",  "source_updated_at": "2026-05-21T00:00:00Z" },
+  { "stage_id": "transform", "seq": 4, "title": "Transform",  "owner": "dbt",  "verb": "Model + Test",  "ft_term": "Transformations (runs dbt)","dbt_term": "Models / Runs / Tests",        "source_updated_at": "2026-05-21T00:00:00Z" },
+  { "stage_id": "semantic",  "seq": 5, "title": "Define",     "owner": "dbt",  "verb": "Govern metrics","ft_term": "(no equivalent)",          "dbt_term": "Semantic Layer / MetricFlow",  "source_updated_at": "2026-05-21T00:00:00Z" },
+  { "stage_id": "consume",   "seq": 6, "title": "Consume",    "owner": "seam", "verb": "Activate",      "ft_term": "Activations / Reverse ETL","dbt_term": "Exposures",                    "source_updated_at": "2026-05-21T00:00:00Z" }
+]

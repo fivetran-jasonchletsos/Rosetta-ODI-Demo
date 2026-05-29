@@ -1,11 +1,11 @@
 export const metadata = { title: "ODI architecture — Rosetta" };
 
 const LAYERS = [
-  { name: "Sources", what: "Fivetran product docs, dbt developer docs, and the merger announcement — the raw material this guide is built from." },
-  { name: "Fivetran (move)", what: "Managed connectors land raw doc and reference data into the lake. In the reference pattern, this is the E + L the whole guide describes." },
-  { name: "Iceberg / S3 ⇄ warehouse", what: "Open table format in object storage, mirrored into Snowflake / Databricks / BigQuery. The shared seam — where Fivetran hands off to dbt." },
-  { name: "dbt (transform)", what: "bronze → silver → gold models, tested and documented. Lineage is the DAG; the gold layer is what the front end reads." },
-  { name: "Front end", what: "This Next.js app — static-exported, deployed on GitHub Pages. Curated enablement content sits on top of the gold layer." },
+  { name: "rosetta_source", what: "A Fivetran Connector SDK source. Incremental, watermark-based, MAR-conscious — lands the connector catalog, pipeline stages, product pillars, and term map into the raw schema." },
+  { name: "Raw + Iceberg lake", what: "ANALYTICS.jason_chletsos_rosetta — the raw landed tables, mirrored to Apache Iceberg on S3 so Snowflake, Spark, and the Managed Data Lake read the same open files." },
+  { name: "dbt (the seam)", what: "source() points at exactly what the connector wrote. staging (views) → marts (tables with enforced contracts): dim_pipeline_stage, dim_product_pillar, fct_term_translation, dim_connector. Plus a MetricFlow semantic layer." },
+  { name: "Quality gate", what: "dbt tests run inside the DAG; a standalone Great Expectations checkpoint then validates the published marts. Two layers — the combined move + transform + validate story." },
+  { name: "Front end", what: "This Next.js app — static-exported on GitHub Pages. It renders a curated snapshot of the gold marts; the prose is hand-authored on top of the modeled data." },
 ];
 
 export default function ArchitecturePage() {
@@ -22,17 +22,19 @@ export default function ArchitecturePage() {
 
         <section className="card p-6 mb-8">
           <h2 className="eyebrow mb-5">Pipeline diagram</h2>
-          <pre className="font-mono text-[12px] leading-relaxed text-graphite overflow-x-auto">{`     Fivetran docs   dbt docs   Merger announcement
-              \\           |            /
-               Fivetran  (managed connectors)
-                          |
-            S3 + Iceberg  ⇄  Snowflake / Databricks / BigQuery
-                          |
-                         dbt   (bronze → silver → gold)
-                          |
-        ┌─────────────────┼──────────────────┐
-   Pipeline view    Translation table    Config builder
-                  (this Next.js front end)`}</pre>
+          <pre className="font-mono text-[12px] leading-relaxed text-graphite overflow-x-auto">{`   catalog · stages · pillars · terms
+                   │
+        rosetta_source  (Fivetran Connector SDK · incremental)
+                   │
+   ANALYTICS.jason_chletsos_rosetta  ⇄  Iceberg lake (S3)
+                   │   ← the seam: dbt source() reads what the connector wrote
+                  dbt   staging (views) → marts (contracts) → semantic
+                   │
+        dbt tests  +  Great Expectations gate  →  dbt docs
+                   │
+        ┌──────────┼───────────────────┐
+   Pipeline view   Translation table   Config builder
+                (this Next.js front end)`}</pre>
         </section>
 
         <section className="card p-6 mb-8">
@@ -53,11 +55,14 @@ export default function ArchitecturePage() {
         <section className="card bar-seam p-6">
           <h2 className="eyebrow mb-3 text-seam">A note on honesty</h2>
           <p className="text-sm text-graphite/90 leading-relaxed max-w-3xl">
-            The diagram above is the reference ODI architecture this guide teaches. This particular app ships
-            curated, hand-verified enablement content rather than rows from a live warehouse — accuracy mattered
-            more than a synced pipeline for an internal field guide. The product facts were checked against
-            Fivetran and dbt documentation as of early 2026, with moving targets (the Fusion engine&apos;s GA, the
-            merger close, the depth of Great Expectations integration) flagged inline wherever they appear.
+            This pipeline ships as runnable artifacts in the repo under <span className="font-mono">/pipeline</span> —
+            the Connector SDK source, the dbt project, the Great Expectations suite, the Airflow DAG, and the
+            Snowflake / Iceberg DDL. The structured guide data (stages, pillars, terms) is genuinely modeled in
+            the dbt marts. The deployed static site renders a curated snapshot of those gold tables, and the
+            explanatory prose is hand-authored on top — accuracy mattered more than a live sync for an internal
+            field guide. Product facts were checked against Fivetran and dbt documentation as of early 2026, with
+            moving targets (the Fusion engine&apos;s GA, the merger close, the depth of Great Expectations
+            integration) flagged inline wherever they appear.
           </p>
         </section>
       </div>

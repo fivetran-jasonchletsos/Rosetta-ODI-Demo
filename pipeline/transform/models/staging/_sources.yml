@@ -1,0 +1,36 @@
+version: 2
+
+sources:
+  - name: rosetta_raw
+    description: >
+      Raw tables landed by the rosetta_source Fivetran connector. This is the
+      seam: exactly what the connector writes is what dbt declares here.
+    database: ANALYTICS
+    schema: jason_chletsos_rosetta
+    loaded_at_field: _synced_at
+    freshness:
+      # the connector runs on a daily cadence; warn after a missed day, error after two
+      warn_after: { count: 36, period: hour }
+      error_after: { count: 60, period: hour }
+    tables:
+      - name: connector_catalog
+        description: Fivetran connector registry rows (one per connector).
+        columns:
+          - name: connector_id
+            description: Stable connector key.
+            data_tests: [not_null, unique]
+      - name: pipeline_stage
+        description: The six combined-pipeline stages.
+        columns:
+          - name: stage_id
+            data_tests: [not_null, unique]
+      - name: product_pillar
+        description: Fivetran and dbt explainer pillars.
+        columns:
+          - name: pillar_key
+            data_tests: [not_null, unique]
+      - name: term_translation
+        description: Curated Fivetran<->dbt terminology pairs.
+        columns:
+          - name: term_id
+            data_tests: [not_null, unique]

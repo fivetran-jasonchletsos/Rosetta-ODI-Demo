@@ -1,0 +1,32 @@
+name: rosetta_marts_checkpoint
+config_version: 1.0
+class_name: Checkpoint
+run_name_template: "rosetta-%Y%m%d-%H%M%S"
+
+validations:
+  - batch_request:
+      datasource_name: snowflake_analytics
+      data_asset_name: jason_chletsos_rosetta_marts.fct_term_translation
+    expectation_suite_name: rosetta_marts_suite
+  - batch_request:
+      datasource_name: snowflake_analytics
+      data_asset_name: jason_chletsos_rosetta_marts.dim_product_pillar
+    expectation_suite_name: rosetta_marts_suite
+  - batch_request:
+      datasource_name: snowflake_analytics
+      data_asset_name: jason_chletsos_rosetta_marts.dim_pipeline_stage
+    expectation_suite_name: rosetta_marts_suite
+
+action_list:
+  - name: store_validation_result
+    action: { class_name: StoreValidationResultAction }
+  - name: update_data_docs
+    action: { class_name: UpdateDataDocsAction }
+  - name: notify_on_failure
+    action:
+      class_name: SlackNotificationAction
+      slack_webhook: ${SLACK_DQ_WEBHOOK}
+      notify_on: failure
+      renderer:
+        module_name: great_expectations.render.renderer.slack_renderer
+        class_name: SlackRenderer

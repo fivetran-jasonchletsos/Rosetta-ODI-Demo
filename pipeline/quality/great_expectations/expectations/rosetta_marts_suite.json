@@ -1,0 +1,62 @@
+{
+  "expectation_suite_name": "rosetta_marts_suite",
+  "meta": {
+    "great_expectations_version": "0.18.x",
+    "notes": "Standalone GX suite over the dbt marts. Complements the in-DAG dbt tests: GX validates the published gold tables independently and produces Data Docs. Fivetran stewards Great Expectations, so this is the data-quality pillar of the combined move + transform + validate story."
+  },
+  "expectations": [
+    {
+      "expectation_type": "expect_table_row_count_to_equal",
+      "kwargs": { "value": 14 },
+      "meta": { "asset": "fct_term_translation", "why": "14 curated term pairs; a drift here means a row was dropped or duplicated upstream." }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_unique",
+      "kwargs": { "column": "term_id" },
+      "meta": { "asset": "fct_term_translation" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": { "column": "fivetran_term" },
+      "meta": { "asset": "fct_term_translation" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": { "column": "dbt_term" },
+      "meta": { "asset": "fct_term_translation" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_set",
+      "kwargs": {
+        "column": "boundary_type",
+        "value_set": [
+          "creates_vs_references", "inbound_vs_inplace", "two_sides_same_warehouse",
+          "handoff_overlap", "no_clean_mapping", "delivers_vs_documents",
+          "adapt_vs_enforce", "coordinated", "where_compute_runs",
+          "different_enforcement_point", "observability", "shared_artifact"
+        ]
+      },
+      "meta": { "asset": "fct_term_translation" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_of_type",
+      "kwargs": { "column": "maps_cleanly", "type_": "BOOLEAN" },
+      "meta": { "asset": "fct_term_translation" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_set",
+      "kwargs": { "column": "product", "value_set": ["fivetran", "dbt"] },
+      "meta": { "asset": "dim_product_pillar" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_set",
+      "kwargs": { "column": "owner", "value_set": ["ft", "dbt", "seam"] },
+      "meta": { "asset": "dim_pipeline_stage" }
+    },
+    {
+      "expectation_type": "expect_table_row_count_to_equal",
+      "kwargs": { "value": 6 },
+      "meta": { "asset": "dim_pipeline_stage", "why": "Exactly six pipeline stages." }
+    }
+  ]
+}

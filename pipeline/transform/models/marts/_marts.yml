@@ -1,0 +1,95 @@
+version: 2
+
+models:
+  - name: dim_connector
+    description: One row per Fivetran connector in the reference catalog.
+    config:
+      contract: { enforced: true }
+    columns:
+      - name: connector_id
+        data_type: varchar
+        constraints: [{ type: not_null }, { type: primary_key }]
+        data_tests: [unique]
+      - name: connector_name
+        data_type: varchar
+        constraints: [{ type: not_null }]
+      - name: source_category
+        data_type: varchar
+        data_tests:
+          - accepted_values: { values: ["database", "saas", "file", "event", "custom"] }
+      - name: extraction_method
+        data_type: varchar
+
+  - name: dim_pipeline_stage
+    description: The six stages of the combined Fivetran + dbt pipeline.
+    config:
+      contract: { enforced: true }
+    columns:
+      - name: stage_id
+        data_type: varchar
+        constraints: [{ type: not_null }, { type: primary_key }]
+        data_tests: [unique]
+      - name: stage_seq
+        data_type: integer
+        constraints: [{ type: not_null }]
+        data_tests:
+          - dbt_utils.accepted_range: { min_value: 1, max_value: 6 }
+      - name: stage_title
+        data_type: varchar
+        constraints: [{ type: not_null }]
+      - name: owner
+        data_type: varchar
+        data_tests:
+          - accepted_values: { values: ["ft", "dbt", "seam"] }
+      - name: verb
+        data_type: varchar
+      - name: fivetran_term
+        data_type: varchar
+      - name: dbt_term
+        data_type: varchar
+
+  - name: dim_product_pillar
+    description: Explainer pillars for Fivetran and dbt (six each).
+    config:
+      contract: { enforced: true }
+    columns:
+      - name: pillar_key
+        data_type: varchar
+        constraints: [{ type: not_null }, { type: primary_key }]
+        data_tests: [unique]
+      - name: product
+        data_type: varchar
+        data_tests:
+          - accepted_values: { values: ["fivetran", "dbt"] }
+      - name: pillar_seq
+        data_type: integer
+        constraints: [{ type: not_null }]
+      - name: pillar_title
+        data_type: varchar
+        constraints: [{ type: not_null }]
+      - name: owner
+        data_type: varchar
+        data_tests:
+          - accepted_values: { values: ["ft", "dbt", "seam"] }
+
+  - name: fct_term_translation
+    description: Curated Fivetran<->dbt terminology pairs, one row per term.
+    config:
+      contract: { enforced: true }
+    columns:
+      - name: term_id
+        data_type: varchar
+        constraints: [{ type: not_null }, { type: primary_key }]
+        data_tests: [unique]
+      - name: fivetran_term
+        data_type: varchar
+        constraints: [{ type: not_null }]
+      - name: dbt_term
+        data_type: varchar
+        constraints: [{ type: not_null }]
+      - name: boundary_type
+        data_type: varchar
+        constraints: [{ type: not_null }]
+      - name: maps_cleanly
+        data_type: boolean
+        constraints: [{ type: not_null }]

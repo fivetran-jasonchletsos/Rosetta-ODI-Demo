@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: stg_fivetran__connector_catalog
+    columns:
+      - name: connector_id
+        data_tests: [not_null, unique]
+      - name: source_category
+        data_tests:
+          - accepted_values:
+              values: ["database", "saas", "file", "event", "custom"]
+      - name: connector_name
+        data_tests: [not_null]
+
+  - name: stg_rosetta__pipeline_stage
+    columns:
+      - name: stage_id
+        data_tests: [not_null, unique]
+      - name: owner
+        data_tests:
+          - accepted_values:
+              values: ["ft", "dbt", "seam"]
+      - name: stage_seq
+        data_tests: [not_null]
+
+  - name: stg_rosetta__product_pillar
+    columns:
+      - name: pillar_key
+        data_tests: [not_null, unique]
+      - name: product
+        data_tests:
+          - accepted_values:
+              values: ["fivetran", "dbt"]
+      - name: owner
+        data_tests:
+          - accepted_values:
+              values: ["ft", "dbt", "seam"]
+
+  - name: stg_rosetta__term_translation
+    columns:
+      - name: term_id
+        data_tests: [not_null, unique]
+      - name: fivetran_term
+        data_tests: [not_null]
+      - name: dbt_term
+        data_tests: [not_null]

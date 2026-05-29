@@ -1,0 +1,6 @@
+{
+  "_comment": "Rosetta source connector config. The reference fixtures need no secrets; the keys below show where live-source credentials would go (docs API token, registry endpoint). Destination schema must stay prefixed jason_chletsos_ per workspace convention.",
+  "destination_schema": "jason_chletsos_rosetta",
+  "docs_api_token": "",
+  "registry_endpoint": "https://fivetran.com/docs/connectors"
+}

@@ -1,0 +1,18 @@
+[
+  { "connector_id": "postgres",   "name": "PostgreSQL", "category": "database", "extraction_method": "Log-based CDC", "source_updated_at": "2026-05-20T00:00:00Z" },
+  { "connector_id": "mysql",      "name": "MySQL",      "category": "database", "extraction_method": "Log-based CDC", "source_updated_at": "2026-05-20T00:00:00Z" },
+  { "connector_id": "sqlserver",  "name": "SQL Server", "category": "database", "extraction_method": "Log-based CDC", "source_updated_at": "2026-05-20T00:00:00Z" },
+  { "connector_id": "oracle",     "name": "Oracle",     "category": "database", "extraction_method": "Log-based CDC", "source_updated_at": "2026-05-20T00:00:00Z" },
+  { "connector_id": "mongodb",    "name": "MongoDB",    "category": "database", "extraction_method": "Log-based CDC", "source_updated_at": "2026-05-20T00:00:00Z" },
+  { "connector_id": "salesforce", "name": "Salesforce", "category": "saas",     "extraction_method": "API polling",  "source_updated_at": "2026-05-20T00:00:00Z" },
+  { "connector_id": "hubspot",    "name": "HubSpot",    "category": "saas",     "extraction_method": "API polling",  "source_updated_at": "2026-05-20T00:00:00Z" },
+  { "connector_id": "netsuite",   "name": "NetSuite",   "category": "saas",     "extraction_method": "API polling",  "source_updated_at": "2026-05-20T00:00:00Z" },
+  { "connector_id": "zendesk",    "name": "Zendesk",    "category": "saas",     "extraction_method": "API polling",  "source_updated_at": "2026-05-20T00:00:00Z" },
+  { "connector_id": "workday",    "name": "Workday",    "category": "saas",     "extraction_method": "API polling",  "source_updated_at": "2026-05-20T00:00:00Z" },
+  { "connector_id": "s3",         "name": "Amazon S3",  "category": "file",     "extraction_method": "File pickup",  "source_updated_at": "2026-05-20T00:00:00Z" },
+  { "connector_id": "gdrive",     "name": "Google Drive","category": "file",    "extraction_method": "File pickup",  "source_updated_at": "2026-05-20T00:00:00Z" },
+  { "connector_id": "sftp",       "name": "SFTP",       "category": "file",     "extraction_method": "File pickup",  "source_updated_at": "2026-05-20T00:00:00Z" },
+  { "connector_id": "kafka",      "name": "Kafka",      "category": "event",    "extraction_method": "Event ingestion", "source_updated_at": "2026-05-20T00:00:00Z" },
+  { "connector_id": "kinesis",    "name": "Kinesis",    "category": "event",    "extraction_method": "Event ingestion", "source_updated_at": "2026-05-20T00:00:00Z" },
+  { "connector_id": "sdk_custom", "name": "Connector SDK source", "category": "custom", "extraction_method": "Connector SDK (Python)", "source_updated_at": "2026-05-20T00:00:00Z" }
+]

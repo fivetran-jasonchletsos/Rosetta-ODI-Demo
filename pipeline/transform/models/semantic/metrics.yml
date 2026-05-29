@@ -1,0 +1,29 @@
+metrics:
+  - name: total_terms
+    description: Total number of curated Fivetran<->dbt term pairs.
+    type: simple
+    label: Total terms
+    type_params:
+      measure: term_count
+
+  - name: clean_mappings
+    description: Terms that map cleanly between the two products (no boundary gap).
+    type: simple
+    label: Clean mappings
+    type_params:
+      measure: clean_mapping_count
+
+  - name: clean_mapping_rate
+    description: Share of terms that map cleanly. Governed once, consumed everywhere.
+    type: ratio
+    label: Clean mapping rate
+    type_params:
+      numerator: clean_mappings
+      denominator: total_terms
+
+  - name: total_pillars
+    description: Total explainer pillars across both products.
+    type: simple
+    label: Total pillars
+    type_params:
+      measure: pillar_count

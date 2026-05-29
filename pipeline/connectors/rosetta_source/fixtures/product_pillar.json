@@ -1,0 +1,14 @@
+[
+  { "pillar_key": "ft_connectors",   "product": "fivetran", "seq": 1, "title": "Connectors",                  "owner": "ft",   "source_updated_at": "2026-05-22T00:00:00Z" },
+  { "pillar_key": "ft_destinations", "product": "fivetran", "seq": 2, "title": "Destinations",                "owner": "ft",   "source_updated_at": "2026-05-22T00:00:00Z" },
+  { "pillar_key": "ft_activations",  "product": "fivetran", "seq": 3, "title": "Activations & Transformations","owner": "ft",  "source_updated_at": "2026-05-22T00:00:00Z" },
+  { "pillar_key": "ft_deployment",   "product": "fivetran", "seq": 4, "title": "Deployment models",           "owner": "ft",   "source_updated_at": "2026-05-22T00:00:00Z" },
+  { "pillar_key": "ft_security",     "product": "fivetran", "seq": 5, "title": "Security & networking",       "owner": "ft",   "source_updated_at": "2026-05-22T00:00:00Z" },
+  { "pillar_key": "ft_concepts",     "product": "fivetran", "seq": 6, "title": "Core concepts",               "owner": "ft",   "source_updated_at": "2026-05-22T00:00:00Z" },
+  { "pillar_key": "dbt_editions",    "product": "dbt",      "seq": 1, "title": "Core, Cloud & Fusion",        "owner": "dbt",  "source_updated_at": "2026-05-22T00:00:00Z" },
+  { "pillar_key": "dbt_blocks",      "product": "dbt",      "seq": 2, "title": "Core building blocks",        "owner": "dbt",  "source_updated_at": "2026-05-22T00:00:00Z" },
+  { "pillar_key": "dbt_testing",     "product": "dbt",      "seq": 3, "title": "Testing & data quality",      "owner": "dbt",  "source_updated_at": "2026-05-22T00:00:00Z" },
+  { "pillar_key": "dbt_semantic",    "product": "dbt",      "seq": 4, "title": "Semantic layer & metrics",    "owner": "dbt",  "source_updated_at": "2026-05-22T00:00:00Z" },
+  { "pillar_key": "dbt_orchestration","product": "dbt",     "seq": 5, "title": "Deployment & orchestration",  "owner": "dbt",  "source_updated_at": "2026-05-22T00:00:00Z" },
+  { "pillar_key": "dbt_meetsft",     "product": "dbt",      "seq": 6, "title": "Where dbt meets Fivetran",    "owner": "seam", "source_updated_at": "2026-05-22T00:00:00Z" }
+]
