@@ -24,28 +24,22 @@ export const pillarTotal = FIVETRAN_PILLARS.length + DBT_PILLARS.length;
 // Connector breadth, by source category (from the config-builder catalog).
 export const connectorsByCategory = SOURCE_CATEGORIES.map((c) => ({
   label: c.label,
-  method: c.method,
   count: c.connectors.length,
 })).sort((a, b) => b.count - a.count);
 export const connectorTotal = connectorsByCategory.reduce((a, b) => a + b.count, 0);
 
-// Terminology mapping — mirrors fct_term_translation.maps_cleanly. The two
-// boundary gaps are the pairs with no clean cross-product mapping (MAR<->seats
-// and source-freshness<->"moves data"); detected from the term text so it stays
-// derived rather than hardcoded.
-const GAP_FIVETRAN_TERMS = new Set<string>([
-  "MAR (Monthly Active Rows)",
-  "(moves data; no equivalent)",
-]);
+// Terminology mapping — mirrors fct_term_translation.maps_cleanly. Boundary gaps
+// are pairs flagged gap:true on the term itself (the data carries the flag), so
+// editing a term label can't silently change the count.
 export const termTotal = TERMS.length;
-export const boundaryGaps = TERMS.filter((t) => GAP_FIVETRAN_TERMS.has(t.ft)).length;
+export const boundaryGaps = TERMS.filter((t) => t.gap).length;
 export const cleanMappings = termTotal - boundaryGaps;
 export const cleanMappingRate = cleanMappings / termTotal;
 
 // Headline stat cards.
 export const HEADLINE = [
   { value: String(termTotal), label: "term pairs", sub: "Fivetran ↔ dbt", accent: "seam" as Owner },
-  { value: String(pillarTotal), label: "explainer pillars", sub: "6 Fivetran · 6 dbt", accent: "ft" as Owner },
+  { value: String(pillarTotal), label: "explainer pillars", sub: `${pillarsByProduct[0].count} Fivetran · ${pillarsByProduct[1].count} dbt`, accent: "ft" as Owner },
   { value: String(stageTotal), label: "pipeline stages", sub: "source → consume", accent: "dbt" as Owner },
   { value: `${Math.round(cleanMappingRate * 100)}%`, label: "map cleanly", sub: `${cleanMappings} of ${termTotal} terms`, accent: "seam" as Owner },
 ];

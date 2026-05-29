@@ -13,6 +13,15 @@ import {
   SEMANTIC_OPTIONS,
   netModesFor,
 } from "@/lib/builder";
+import { OWNER_STYLE, type Owner } from "@/lib/content";
+
+// Active-choice fill is bespoke (border + soft bg + deep text), distinct from
+// the shared owner palette, so it stays local here.
+const CHOICE_ACTIVE: Record<Owner, string> = {
+  ft: "border-ft bg-ftsoft text-ftdeep",
+  dbt: "border-dbt bg-dbtsoft text-dbtdeep",
+  seam: "border-seam bg-seamsoft text-seamdeep",
+};
 
 function Choice({
   active,
@@ -23,22 +32,20 @@ function Choice({
   active: boolean;
   onClick: () => void;
   children: React.ReactNode;
-  accent?: "ft" | "dbt" | "seam";
+  accent?: Owner;
 }) {
-  const on =
-    accent === "ft" ? "border-ft bg-ftsoft text-ftdeep" : accent === "dbt" ? "border-dbt bg-dbtsoft text-dbtdeep" : "border-seam bg-seamsoft text-seamdeep";
   return (
     <button
       onClick={onClick}
-      className={`rounded-md border px-3 py-1.5 text-xs font-medium transition-colors ${active ? on : "border-line bg-panel text-graphite hover:text-ink hover:border-mute/40"}`}
+      className={`rounded-md border px-3 py-1.5 text-xs font-medium transition-colors ${active ? CHOICE_ACTIVE[accent] : "border-line bg-panel text-graphite hover:text-ink hover:border-mute/40"}`}
     >
       {children}
     </button>
   );
 }
 
-function Field({ label, children, accent = "ft" }: { label: string; children: React.ReactNode; accent?: "ft" | "dbt" | "seam" }) {
-  const t = accent === "ft" ? "text-ft" : accent === "dbt" ? "text-dbt" : "text-seam";
+function Field({ label, children, accent = "ft" }: { label: string; children: React.ReactNode; accent?: Owner }) {
+  const t = OWNER_STYLE[accent].text;
   return (
     <div>
       <p className={`font-mono text-[10px] tracking-[0.15em] mb-2 ${t}`}>{label}</p>

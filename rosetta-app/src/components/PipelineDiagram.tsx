@@ -1,13 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { STAGES, OWNER_LABEL, type Owner } from "@/lib/content";
-
-const ownerClasses: Record<Owner, { bar: string; pill: string; text: string; ring: string }> = {
-  ft:   { bar: "bar-ft",   pill: "pill--ft",   text: "text-ft",   ring: "text-ft" },
-  dbt:  { bar: "bar-dbt",  pill: "pill--dbt",  text: "text-dbt",  ring: "text-dbt" },
-  seam: { bar: "bar-seam", pill: "pill--seam", text: "text-seam", ring: "text-seam" },
-};
+import { STAGES, OWNER_LABEL, OWNER_STYLE } from "@/lib/content";
 
 type Audience = "ft" | "dbt";
 
@@ -15,7 +9,7 @@ export default function PipelineDiagram() {
   const [selected, setSelected] = useState<string>("warehouse");
   const [audience, setAudience] = useState<Audience>("ft");
   const stage = STAGES.find((s) => s.id === selected) ?? STAGES[0];
-  const oc = ownerClasses[stage.owner];
+  const oc = OWNER_STYLE[stage.owner];
 
   return (
     <div className="no-print">
@@ -44,7 +38,7 @@ export default function PipelineDiagram() {
       {/* Stage row */}
       <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-6">
         {STAGES.map((s, i) => {
-          const c = ownerClasses[s.owner];
+          const c = OWNER_STYLE[s.owner];
           const active = s.id === selected;
           const yourSide = s.owner === audience || s.owner === "seam";
           return (
@@ -52,11 +46,11 @@ export default function PipelineDiagram() {
               key={s.id}
               aria-pressed={active}
               onClick={() => setSelected(s.id)}
-              className={`stage card ${c.bar} ${c.ring} p-3.5 text-left ${active ? "" : "lift"} ${yourSide ? "" : "opacity-60"}`}
+              className={`stage card ${c.bar} ${c.text} p-3.5 text-left ${active ? "" : "lift"} ${yourSide || active ? "" : "opacity-60"}`}
             >
               <div className="flex items-center justify-between mb-1.5">
                 <span className="font-mono text-[10px] text-mute">{String(i + 1).padStart(2, "0")}</span>
-                <span className={`dot dot--${s.owner}`} />
+                <span className={`dot ${c.dot}`} />
               </div>
               <p className="display text-[15px] font-semibold text-ink leading-tight">{s.title}</p>
               <p className={`font-mono text-[10px] mt-0.5 ${c.text}`}>{s.verb}</p>
@@ -84,7 +78,7 @@ export default function PipelineDiagram() {
         <ul className="space-y-2 mb-5 max-w-2xl">
           {stage.detail.map((d, i) => (
             <li key={i} className="flex gap-2.5 text-sm text-graphite/90 leading-relaxed">
-              <span className={`mt-1.5 flex-none w-1.5 h-1.5 rounded-full ${stage.owner === "ft" ? "bg-ft" : stage.owner === "dbt" ? "bg-dbt" : "bg-seam"}`} />
+              <span className={`mt-1.5 flex-none w-1.5 h-1.5 rounded-full ${oc.bg}`} />
               {d}
             </li>
           ))}

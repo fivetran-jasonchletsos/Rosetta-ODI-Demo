@@ -236,6 +236,7 @@ export type TermPair = {
   ft: string;
   dbt: string;
   note: string;
+  gap?: boolean; // true when the two products have no clean cross-mapping (a genuine boundary gap)
 };
 
 export const TERMS: TermPair[] = [
@@ -243,12 +244,12 @@ export const TERMS: TermPair[] = [
   { ft: "Sync", dbt: "Run / Build ( dbt build )", note: "A sync moves rows IN; a dbt run transforms rows already there (inbound vs in-place). Note dbt run executes models only, while dbt build also runs tests, snapshots, and seeds in DAG order — prefer build in production." },
   { ft: "Destination", dbt: "Target / connection profile (+ adapter)", note: "Same warehouse, two sides. Fivetran writes TO the destination; dbt's target — in its connection profile — is HOW it connects to and runs on that same warehouse. The adapter (dbt-snowflake, dbt-bigquery) is the separate plugin that speaks that warehouse's SQL dialect." },
   { ft: "Normalized connector schema", dbt: "Staging models ( stg_* )", note: "Fivetran normalizes raw API payloads into typed tables; dbt staging models clean and rename further. Fivetran's dbt packages literally generate these." },
-  { ft: "MAR (Monthly Active Rows)", dbt: "Seats + consumption", note: "The core pricing-axis mismatch. Fivetran = volume of distinct rows changed. dbt = developers plus run/consumption metering. Don't convert one to the other — explain both." },
+  { ft: "MAR (Monthly Active Rows)", dbt: "Seats + consumption", gap: true, note: "The core pricing-axis mismatch. Fivetran = volume of distinct rows changed. dbt = developers plus run/consumption metering. Don't convert one to the other — explain both." },
   { ft: "Activations / Reverse ETL", dbt: "Exposures", note: "Fivetran activations physically push modeled data back OUT to operational tools. dbt exposures only DOCUMENT downstream consumers; they don't move data." },
   { ft: "Schema-drift handling", dbt: "Schema tests / contracts", note: "Fivetran auto-ADAPTS to upstream schema changes on ingest. dbt ASSERTS and enforces expected schema downstream. Adapt vs enforce — complementary." },
   { ft: "Sync frequency / schedule", dbt: "Job schedule / triggers", note: "Both are 'how often it runs.' Pair them so the two schedules coordinate — the sync should land before the dbt run fires." },
   { ft: "Deployment mode (SaaS / Hybrid)", dbt: "Cloud vs Core", note: "Fivetran's modes = where the MOVEMENT compute runs. dbt's Cloud-vs-Core = whether orchestration is managed or self-run; SQL always executes in the warehouse." },
-  { ft: "(moves data; no equivalent)", dbt: "source freshness", note: "dbt can CHECK whether source data is fresh but cannot MAKE it fresh — that's Fivetran's job. Teaches the dependency direction explicitly." },
+  { ft: "(moves data; no equivalent)", dbt: "source freshness", gap: true, note: "dbt can CHECK whether source data is fresh but cannot MAKE it fresh — that's Fivetran's job. Teaches the dependency direction explicitly." },
   { ft: "Column blocking / hashing (PII)", dbt: "Grants / meta tags (governance)", note: "Fivetran controls PII at INGEST (block/hash). dbt governs access on MODELED data via grants and tagging. Two different enforcement points." },
   { ft: "Connector logs / sync history", dbt: "run_results.json / artifacts", note: "Both are the observability and audit trail — one for movement, one for transformation. Pair them for the 'how do I debug' conversation." },
   { ft: "Fivetran dbt package (Quickstart)", dbt: "dbt package ( packages.yml )", note: "The clearest existing bridge: Fivetran PUBLISHES dbt packages that customers install. Same artifact, maintained by Fivetran, consumed in dbt. Interoperability predates the merger." },
@@ -281,3 +282,12 @@ export const MYTHS: Myth[] = [
 
 // ── Misc shared ──────────────────────────────────────────────────────────────
 export const OWNER_LABEL: Record<Owner, string> = { ft: "Fivetran", dbt: "dbt", seam: "Shared" };
+
+// Single source of truth for owner -> visual styling. Used by every component
+// that color-codes by owner (pipeline, pillars, charts) so a rebrand or a
+// utility rename happens in exactly one place.
+export const OWNER_STYLE: Record<Owner, { bar: string; text: string; pill: string; soft: string; dot: string; bg: string; fill: string }> = {
+  ft:   { bar: "bar-ft",   text: "text-ft",   pill: "pill--ft",   soft: "bg-ftsoft/50",   dot: "dot--ft",   bg: "bg-ft",   fill: "#2b6ef2" },
+  dbt:  { bar: "bar-dbt",  text: "text-dbt",  pill: "pill--dbt",  soft: "bg-dbtsoft/50",  dot: "dot--dbt",  bg: "bg-dbt",  fill: "#ff5c39" },
+  seam: { bar: "bar-seam", text: "text-seam", pill: "pill--seam", soft: "bg-seamsoft/50", dot: "dot--seam", bg: "bg-seam", fill: "#0f9e8e" },
+};

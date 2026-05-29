@@ -1,10 +1,4 @@
-import { type Pillar, type Owner } from "@/lib/content";
-
-const accent: Record<Owner, { bar: string; text: string; pill: string; soft: string }> = {
-  ft:   { bar: "bar-ft",   text: "text-ft",   pill: "pill--ft",   soft: "bg-ftsoft/50" },
-  dbt:  { bar: "bar-dbt",  text: "text-dbt",  pill: "pill--dbt",  soft: "bg-dbtsoft/50" },
-  seam: { bar: "bar-seam", text: "text-seam", pill: "pill--seam", soft: "bg-seamsoft/50" },
-};
+import { type Pillar, type Owner, OWNER_STYLE } from "@/lib/content";
 
 export default function PillarView({
   eyebrow,
@@ -19,7 +13,7 @@ export default function PillarView({
   pillars: Pillar[];
   side: Owner;
 }) {
-  const a = accent[side];
+  const a = OWNER_STYLE[side];
   return (
     <main className="px-5 py-12 sm:px-6 sm:py-16 md:px-16 md:py-20">
       <div className="mx-auto max-w-5xl">
@@ -31,7 +25,7 @@ export default function PillarView({
 
         <div className="space-y-5">
           {pillars.map((p, i) => {
-            const pa = accent[p.owner];
+            const pa = OWNER_STYLE[p.owner];
             return (
               <section key={p.key} className={`card ${pa.bar} p-6 reveal reveal-${Math.min(i + 1, 5)}`}>
                 <div className="flex items-center gap-3 flex-wrap mb-3">

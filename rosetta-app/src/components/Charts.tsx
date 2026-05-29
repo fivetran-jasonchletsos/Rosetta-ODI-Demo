@@ -11,14 +11,17 @@ import {
   termTotal,
   cleanMappingRate,
 } from "@/lib/metrics";
-import type { Owner } from "@/lib/content";
+import { OWNER_STYLE, type Owner } from "@/lib/content";
 
-const FILL: Record<Owner, string> = { ft: "#2b6ef2", dbt: "#ff5c39", seam: "#0f9e8e" };
+const FILL: Record<Owner, string> = {
+  ft: OWNER_STYLE.ft.fill,
+  dbt: OWNER_STYLE.dbt.fill,
+  seam: OWNER_STYLE.seam.fill,
+};
 
 function ChartCard({ title, caption, children, accent = "seam" }: { title: string; caption: string; children: React.ReactNode; accent?: Owner }) {
-  const bar = accent === "ft" ? "bar-ft" : accent === "dbt" ? "bar-dbt" : "bar-seam";
   return (
-    <section className={`card ${bar} p-6`}>
+    <section className={`card ${OWNER_STYLE[accent].bar} p-6`}>
       <h3 className="display text-lg font-semibold text-ink">{title}</h3>
       <p className="text-sm text-graphite/75 mt-1 mb-5 leading-relaxed">{caption}</p>
       {children}
@@ -28,11 +31,9 @@ function ChartCard({ title, caption, children, accent = "seam" }: { title: strin
 
 /* Stat card — big Fraunces number. */
 export function StatCard({ value, label, sub, accent }: { value: string; label: string; sub: string; accent: Owner }) {
-  const color = accent === "ft" ? "text-ft" : accent === "dbt" ? "text-dbt" : "text-seam";
-  const bar = accent === "ft" ? "bar-ft" : accent === "dbt" ? "bar-dbt" : "bar-seam";
   return (
-    <div className={`card ${bar} p-5`}>
-      <p className={`display text-5xl font-semibold leading-none ${color}`}>{value}</p>
+    <div className={`card ${OWNER_STYLE[accent].bar} p-5`}>
+      <p className={`display text-5xl font-semibold leading-none ${OWNER_STYLE[accent].text}`}>{value}</p>
       <p className="text-sm font-medium text-ink mt-2">{label}</p>
       <p className="font-mono text-[10px] tracking-[0.12em] text-mute mt-0.5">{sub}</p>
     </div>
@@ -68,11 +69,11 @@ export function OwnershipSplitBar() {
 
 /* Horizontal bar chart — connectors by source category. */
 export function CategoryBarChart() {
-  const max = Math.max(...connectorsByCategory.map((c) => c.count));
+  const max = Math.max(1, ...connectorsByCategory.map((c) => c.count));
   return (
     <ChartCard
       title="Connector breadth"
-      caption={`${connectorTotal} reference connectors across five source categories — the shape of what Fivetran lands before dbt ever sees it.`}
+      caption={`${connectorTotal} reference connectors across ${connectorsByCategory.length} source categories — the shape of what Fivetran lands before dbt ever sees it.`}
       accent="ft"
     >
       <div className="space-y-2.5">
@@ -125,7 +126,7 @@ export function MappingDonut() {
 
 /* Two-column balance — pillars per product, deliberately equal. */
 export function PillarsBalance() {
-  const max = Math.max(...pillarsByProduct.map((p) => p.count));
+  const max = Math.max(1, ...pillarsByProduct.map((p) => p.count));
   return (
     <ChartCard
       title="Equal coverage"

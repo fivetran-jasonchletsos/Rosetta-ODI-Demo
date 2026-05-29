@@ -29,7 +29,7 @@ export default function TranslatePage() {
           <p className="eyebrow mb-3">Terminology Rosetta</p>
           <h1 className="display text-4xl sm:text-5xl font-semibold text-ink leading-tight">Translation table</h1>
           <p className="text-lg text-graphite/90 mt-4 max-w-2xl leading-relaxed">
-            Fourteen pairs. The third column is where the teaching happens — it flags where a concept genuinely
+            {TERMS.length} pairs. The third column is where the teaching happens — it flags where a concept genuinely
             does <em>not</em> map cleanly, not just synonyms.
           </p>
         </header>
@@ -54,7 +54,7 @@ export default function TranslatePage() {
         </div>
 
         <div className="space-y-3">
-          {rows.map((t, i) => {
+          {rows.map((t) => {
             const left = leadIsFt ? t.ft : t.dbt;
             const right = leadIsFt ? t.dbt : t.ft;
             const leftAccent = leadIsFt ? "text-ft" : "text-dbt";
@@ -62,7 +62,7 @@ export default function TranslatePage() {
             const leftLabel = leadIsFt ? "FIVETRAN" : "DBT";
             const rightLabel = leadIsFt ? "DBT" : "FIVETRAN";
             return (
-              <div key={i} className="card p-5">
+              <div key={t.ft} className="card p-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5 mb-3">
                   <div>
                     <p className={`font-mono text-[10px] tracking-[0.15em] mb-1 ${leftAccent}`}>{leftLabel}</p>

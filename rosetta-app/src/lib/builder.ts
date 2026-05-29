@@ -36,7 +36,10 @@ export const DEPLOYMENT_MODES: DeploymentMode[] = [
   { id: "hybrid", label: "Hybrid Deployment", plane: "Data plane in customer VPC", note: "Lightweight agent in the customer's network; source data never leaves the VPC." },
 ];
 
-// Networking modes available depend on source category and deployment mode.
+// Networking modes available depend on the source category (e.g. databases
+// support the full set incl. reverse SSH; SaaS reaches the source over its
+// public API). Deployment mode (SaaS vs Hybrid) is an independent axis and does
+// not narrow this list.
 export type NetMode = { id: string; label: string };
 export const ALL_NET_MODES: NetMode[] = [
   { id: "direct", label: "Direct + IP allow-list" },
