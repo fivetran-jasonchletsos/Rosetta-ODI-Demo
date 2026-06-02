@@ -1,6 +1,8 @@
 import Link from "next/link";
 import PipelineDiagram from "@/components/PipelineDiagram";
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 const TABS = [
   { href: "/fivetran", num: "02", title: "Fivetran, explained", desc: "Connectors, destinations, activations, deployment and security modes, MAR. For dbt people.", accent: "bar-ft" },
   { href: "/dbt", num: "03", title: "dbt, explained", desc: "Core, Cloud and Fusion, models and tests, the semantic layer, orchestration. For Fivetran people.", accent: "bar-dbt" },
@@ -35,7 +37,29 @@ export default function Home() {
           <PipelineDiagram />
         </section>
 
-        <section className="reveal reveal-3">
+        <section className="mb-16 reveal reveal-3">
+          <div className="flex items-baseline justify-between mb-5">
+            <h2 className="display text-2xl font-semibold text-ink">The guide in two minutes</h2>
+            <span className="eyebrow hidden sm:inline">walkthrough</span>
+          </div>
+          <video
+            className="w-full rounded-lg border border-line bg-black no-print"
+            controls
+            preload="metadata"
+            playsInline
+            poster={`${BASE}/video/poster.png`}
+          >
+            <source src={`${BASE}/video/walkthrough.mp4`} type="video/mp4" />
+            Your browser does not support embedded video.{" "}
+            <a href={`${BASE}/video/walkthrough.mp4`}>Download the walkthrough.</a>
+          </video>
+          <p className="text-sm text-graphite/80 mt-3 leading-relaxed">
+            A scroll through every section: the combined pipeline, the Fivetran and dbt halves, the config
+            builder, the translation table, the metrics dashboard, day in the life, and how this app itself is built.
+          </p>
+        </section>
+
+        <section className="reveal reveal-4">
           <h2 className="display text-2xl font-semibold text-ink mb-5">Where to go next</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {TABS.map((t) => (

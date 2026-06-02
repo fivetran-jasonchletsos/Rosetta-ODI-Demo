@@ -1,0 +1,3 @@
+# Recorder tooling (playwright) installed at repo root; not part of the app
+/node_modules
+.DS_Store
