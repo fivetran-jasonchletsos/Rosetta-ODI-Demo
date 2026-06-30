@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import Script from "next/script";
 import TopNav from "@/components/TopNav";
 import Footer from "@/components/Footer";
 import "./globals.css";
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <TopNav />
         <div className="flex-1">{children}</div>
         <Footer />
+        <Script src="/feedback-widget.js" strategy="afterInteractive" />
       </body>
     </html>
   );
