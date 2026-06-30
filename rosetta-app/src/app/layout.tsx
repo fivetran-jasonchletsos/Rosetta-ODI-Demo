@@ -23,10 +23,26 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const OG_IMAGE = "https://fivetran-jasonchletsos.github.io/Rosetta-ODI-Demo/og.png";
+
 export const metadata: Metadata = {
   title: "Rosetta — Fivetran and dbt, one pipeline",
   description:
     "An internal field guide for the Fivetran + dbt Labs merger. What each side needs to understand about the other: connectors, destinations, activations, deployment and security modes on the Fivetran side; models, tests, the semantic layer, Core/Cloud/Fusion on the dbt side. Includes an interactive pipeline view, a config builder, and a terminology translation table.",
+  openGraph: {
+    title: "Rosetta — Fivetran and dbt, one pipeline",
+    description: "One pipeline, two fluencies. The canonical joint story for the Fivetran + dbt Labs merger.",
+    url: "https://fivetran-jasonchletsos.github.io/Rosetta-ODI-Demo/",
+    siteName: "Rosetta · ODI Demo",
+    images: [{ url: OG_IMAGE, width: 1920, height: 1080, alt: "Rosetta — one pipeline, two fluencies" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Rosetta — Fivetran and dbt, one pipeline",
+    description: "One pipeline, two fluencies. The canonical joint story for the Fivetran + dbt Labs merger.",
+    images: [OG_IMAGE],
+  },
 };
 
 export const viewport: Viewport = {
